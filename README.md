@@ -52,5 +52,34 @@ where each line contains the caption followed by the filename of the image files
 
 The corresponding image files should be saved in the `data/` directory. The directory can be changed with the `--image-dir` runtime flag.
 
+### Precomputing Text Embeddings
+
+In addition to downloading the images, we need the embeddings from the text encoder of Stable Diffusion to train. We precompute this ahead of time in order to improve training time throughput. To do so, run the following script:
+
+```
+python scripts/preprocess_sd_embeddings.py  datasets/recipe1m_val.tsv data/recipe1m/validation/clip_embs
+```
+
+This will precompute embeddings from the captions in `recipe_val.tsv`, and save the results to `data/recipe/validation/clip_embs`.
+
+### Starting a Training Job
+
+After preprocessing the data, we can finally start a training job with the following command line flag:
+
+```
+randport=$(shuf -i8000-9999 -n1)  # Generate a random port number
+python -u main.py \
+    --dist-url "tcp://127.0.0.1:${randport}" --dist-backend 'nccl' \
+    --epochs=5  --steps_per_epoch=1400 \
+    --multiprocessing-distributed --world-size 1 --rank 0 \
+    --dataset=recipe1m  --val-dataset=recipe1m \
+    --exp-name='chefFusion_maxlen300_6b_epoch5_steps1400_batchsize16_gpu2' --image-dir='data/'  --log-base-dir='runs/' \
+    --batch-size=16  --val-batch-size=16 \
+    --precision='bf16'  --print-freq=100 --max-len=300 > chefFusion_maxlen300_6b_epoch5_step1400_batchsize16_gpu2
+```
+
+
+The default hyperparameters in `main.py` should reproduce our main results in the paper. We train on 2 A100 GPUs for 1 day. For GPUs with smaller memory available, you might need to reduce the batch size, enable gradient accumulation, or adjust hyperparameters to get good performance. You may also have to disable NCCL P2P with export NCCL_P2P_DISABLE=1 if you run into issues.
+
 
 
