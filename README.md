@@ -60,7 +60,7 @@ In addition to downloading the images, we need the embeddings from the text enco
 python scripts/preprocess_sd_embeddings.py  datasets/recipe1m_val.tsv data/recipe1m/validation/clip_embs
 ```
 
-This will precompute embeddings from the captions in `recipe_val.tsv`, and save the results to `data/recipe/validation/clip_embs`.
+This will precompute embeddings from the captions in `recipe1m_val.tsv`, and save the results to `data/recipe1m/validation/clip_embs`.
 
 ### Starting a Training Job
 
