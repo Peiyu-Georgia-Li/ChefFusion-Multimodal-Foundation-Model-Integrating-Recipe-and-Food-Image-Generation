@@ -73,13 +73,25 @@ python -u main.py \
     --epochs=5  --steps_per_epoch=1400 \
     --multiprocessing-distributed --world-size 1 --rank 0 \
     --dataset=recipe1m  --val-dataset=recipe1m \
-    --exp-name='chefFusion_maxlen300_6b_epoch5_steps1400_batchsize16_gpu2' --image-dir='data/'  --log-base-dir='runs/' \
+    --exp-name='chefFusion_maxlen300_6b_epoch5_steps1400_batchsize16_gpu2(name whatever you want)' --image-dir='data/'  --log-base-dir='runs/' \
     --batch-size=16  --val-batch-size=16 \
-    --precision='bf16'  --print-freq=100 --max-len=300 > chefFusion_maxlen300_6b_epoch5_step1400_batchsize16_gpu2
+    --precision='bf16'  --print-freq=100 --max-len=300 > chefFusion_maxlen300_6b_epoch5_step1400_batchsize16_gpu2(name whatever you want)
 ```
 
 
-The default hyperparameters in `main.py` should reproduce our main results in the paper. We train on 2 A100 GPUs for 1 day. For GPUs with smaller memory available, you might need to reduce the batch size, enable gradient accumulation, or adjust hyperparameters to get good performance. You may also have to disable NCCL P2P with export NCCL_P2P_DISABLE=1 if you run into issues.
+The default hyperparameters in `main.py` should reproduce our main results in the paper. You can also specify the device of GPU by adding something like `CUDA_VISIBLE_DEVICES=0,1` in front of `python -u main.py`. We train on 2 A100 GPUs for 1 day. For GPUs with smaller memory available, you might need to reduce the batch size, enable gradient accumulation, or adjust hyperparameters to get good performance. You may also have to disable NCCL P2P with export NCCL_P2P_DISABLE=1 if you run into issues.
 
 
 
+## Pruning the Checkpoint
+
+As ChefFusion only consists of a few pretrained linear layers and the `[IMG]` embeddings, we can discard most of the pretrained weights to save on disk space. If you have trained a new model, and wish to do so, you can use `chefFusion/prune_model_ckpt.py` file to prune the model weights, and format the ckpt as required by `chefFusion/models.py`:
+
+```
+python scripts/prune_model_ckpt.py  runs/chefFusion_maxlen300_6b_epoch5_step1400_batchsize16_gpu2
+```
+
+We used the same script to create the weights in the `checkpoints/` directory.
+
+
+Our code is modified from [GILL](https://github.com/kohjingyu/gill/tree/main).
