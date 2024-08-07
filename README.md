@@ -39,9 +39,9 @@ export PYTHONPATH=$PYTHONPATH:/home/path/to/chefFusion/
 
 Our model is trained on the [Recipe1M](https://github.com/torralba-lab/im2recipe?tab=readme-ov-file#recipe1m-dataset) dataset. 
 
-After following the instructions on the website to download the dataset, you will see two files named `layer1.json` and `layer2.json`.
+After following the instructions on the website to download the dataset, you will see two files named `layer1.json` and `layer2.json`. If you fail to download the dataset from the link, please contact the author of the paper to attain the dataset.
 
-Then we format it into a `.tsv` file as follows by run the `recipe1m_processing.py`:
+Then we format it into two `.tsv` files (`recipe1m_train.tsv` and `recipe1m_val.tsv`) as follows by running the `recipe1m_processing.py`:
 ```
 caption image
 This is food title: Kombu Tea Grilled Chicken Thigh This is ingredient: ['2 chicken thighs', '2 tsp kombu tea', '1 white pepper'] This is instruction: ['pierce the skin of the chicken with a fork or knife.', 'sprinkle with kombu tea evenly on both sides of the chicken, about 1 teaspoon per chicken thigh.', 'brown the skin side of the chicken first over high heat until golden brown.', 'sprinkle some pepper on the meat just before flipping over.', 'then brown the other side until golden brown.']      6bdca6e490.jpg
