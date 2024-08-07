@@ -1,1 +1,1 @@
-## To store the training result.
+## To store the training checkpoints
