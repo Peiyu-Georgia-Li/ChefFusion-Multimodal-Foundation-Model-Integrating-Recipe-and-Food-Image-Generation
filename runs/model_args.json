@@ -1,0 +1,36 @@
+{
+    "opt_version": "facebook/opt-6.7b",
+    "visual_encoder": "openai/clip-vit-large-patch14",
+    "text_emb_layers": [
+        -1
+    ],
+    "freeze_lm": true,
+    "freeze_vm": true,
+    "n_visual_tokens": 4,
+    "ret_emb_dim": 256,
+    "gen_emb_dim": 768,
+    "text_fc_mode": "gill_mapper",
+    "ret_text_fc_mode": "linear",
+    "num_tokens": 8,
+    "num_clip_tokens": 77,
+    "retrieval_token_idx": [
+        50266,
+        50267,
+        50268,
+        50269,
+        50270,
+        50271,
+        50272,
+        50273
+    ],
+    "gen_token_idx": [
+        50266,
+        50267,
+        50268,
+        50269,
+        50270,
+        50271,
+        50272,
+        50273
+    ]
+}
