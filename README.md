@@ -33,6 +33,9 @@ Add the `chefFusion` library to PYTHONPATH:
 ```
 export PYTHONPATH=$PYTHONPATH:/home/path/to/chefFusion/
 ```
+## Checkpoints
+The checkpoint and model config in `runs/`reproduce the main results reported in our paper.
+
 ## Training
 
 ### Preparing the Dataset
